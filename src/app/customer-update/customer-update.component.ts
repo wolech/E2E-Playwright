@@ -89,6 +89,10 @@ export class CustomerUpdateComponent implements OnInit {
       
   
         
+  }//added reset button
+  onReset() {
+    this.userForm.reset();
+
   }
 } 
   
