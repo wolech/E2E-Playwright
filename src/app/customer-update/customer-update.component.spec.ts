@@ -39,23 +39,53 @@ await page.locator('input[name="dateofBirth"]');
   });
 
 
-// Steps:
-// Navigate to the customer update page.
-// Check if the customer name input field is visible.
-// Check if the customer email input field is visible.
-// Check if the customer phone number input field is visible.
-// Expected Result: All input fields should be visible.
 
-// Test Case 2: Verify Error Message for Empty Customer Name
-// Description: Ensure that an error message is displayed when the customer name field is left empty and the form is submitted.
 
-// Steps:
-// Navigate to the customer update page.bla
-// Leave the customer name field empty.
-// Fill in the other required fields.
+// Test Case 2: Verify Error Message for Empty password
+// Description: Ensure that an error message is displayed when the password field is left empty and the form is submitted.
+
+test.describe('Missing data1', () => {
+  test('should display error message for empty password', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+    //empty password
+      await page.locator('input[name="password"]')
+      await page.locator('input[name="firstName"]').fill('Name');
+      await page.locator('input[name="lastName"]').fill('Lastname');
+      await page.locator('input[name="email"]').fill('something@a.a');
+      await page.locator('input[name="phone"]').fill('1234567891');
+      await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+          await page.locator('button[type=submit]').click();
+      // Check for the error message "Username is required is required."
+      await expect(page.locator('text=Password is required.')).toBeVisible();
+
+
 // Submit the form.
-// Check for the error message indicating that the customer name is required.
-// Expected Result: The error message indicating that the customer name is required should be displayed.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Username is required is required."
+const errorMessage = await page.locator('text=Password is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+
+
 
 // Test Case 3: Verify Error Message for Invalid Email
 // Description: Ensure that an error message is displayed when an invalid email is entered in the email field.

@@ -103,11 +103,3 @@ await page.locator('button[type=submit]').click();
   });
   await page.click('#alert-button');
 });
-
-// Steps:
-// Navigate to the login page.
-// Fill in the username field with a valid username.
-// Fill in the password field with a valid password.
-// Submit the form.
-// Check for successful login indication (e.g., redirection to the dashboard).
-// Expected Result: The user should be successfully logged in and redirected to the Customer Update page.
