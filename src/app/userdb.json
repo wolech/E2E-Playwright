@@ -49,6 +49,16 @@
       "email": "rohini@gmail.com",
       "phone": 960074112,
       "dateofBirth": "2019-01-29"
+    },
+    {
+      "id": "43rf",
+      "firstName": "Test",
+      "lastName": "Tester",
+      "username": "tester",
+      "password": "tester@123",
+      "email": "tester@gmail.com",
+      "phone": 5568525112,
+      "dateofBirth": "2000-02-29"
     }
   ]
 }

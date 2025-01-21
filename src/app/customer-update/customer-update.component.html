@@ -13,7 +13,7 @@
       <h2>Update Form</h2>
 
       <div>
-        <label for="username">Welcome</label>
+        <label for="username">Username</label>
         <input type="username" id="username" formControlName="username">        
       </div>
 
@@ -69,6 +69,8 @@
 
       <div class="button-group">
         <button type="submit" [disabled]="userForm.invalid">Update</button>
+        <button type="reset" (click)="onReset()">Reset</button>
+        <!-- //added reset button -->
       </div>
     </div>
   </form>

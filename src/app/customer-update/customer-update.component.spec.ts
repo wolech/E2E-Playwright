@@ -1,7 +1,43 @@
-// Test Cases:
+import { test, expect } from '@playwright/test';
 
 // Test Case 1: Verify Customer Update Form Fields are Visible
 // Description: Ensure that all input fields in the customer update form are visible.
+test('should successfully log in with valid credentials', async ({ page }) => {
+  // Navigate to the login page.
+  await page.goto('http://localhost:4200/login') 
+  // Fill in the username field with a valid username.
+  // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+  // Submit the form.
+  await page.locator('button[type=submit]').click();
+
+  page.on('dialog', async dialog => {
+    expect(dialog.message()).toContain('Login Successful');
+    await dialog.dismiss();
+  });
+  //await page.click('#alert-button');
+  // Page redirected to http://localhost:4200/customer-update
+await expect(page.url()).toBe('http://localhost:4200/customer-update?username=tester');
+
+
+// Check if the username input field is visible.
+// Check if the  password input field is visible.
+// Check if the  firstname number input field is visible.
+// Check if the  lastname input field is visible.
+// Check if the  email input field is visible.
+// Check if the phone number input field is visible.
+// Check if the  date of birth number input field is visible.
+await page.locator('input[name="username"]');
+await page.locator('input[name="password"]');
+await page.locator('input[name="firstName"]');
+await page.locator('input[name="lastName"]');
+await page.locator('input[name="email"]');
+await page.locator('input[name="phone"]');
+await page.locator('input[name="dateofBirth"]');
+// Expected Result: All input fields should be visible.
+  });
+
 
 // Steps:
 // Navigate to the customer update page.
@@ -14,7 +50,7 @@
 // Description: Ensure that an error message is displayed when the customer name field is left empty and the form is submitted.
 
 // Steps:
-// Navigate to the customer update page.
+// Navigate to the customer update page.bla
 // Leave the customer name field empty.
 // Fill in the other required fields.
 // Submit the form.
