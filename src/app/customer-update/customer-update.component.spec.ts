@@ -45,7 +45,7 @@ await page.locator('input[name="dateofBirth"]');
 // Description: Ensure that an error message is displayed when the password field is left empty and the form is submitted.
 
 test.describe('Missing data1', () => {
-  test('should display error message for empty password', async ({ page }) => {
+  test('login', async ({ page }) => {
     // Navigate to the login page.
     await page.goto('http://localhost:4200/login') 
     // Fill in the username field with a valid username.
@@ -68,12 +68,6 @@ test.describe('Missing data1', () => {
       await page.locator('input[name="phone"]').fill('1234567891');
       await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
 
-
-          await page.locator('button[type=submit]').click();
-      // Check for the error message "Username is required is required."
-      await expect(page.locator('text=Password is required.')).toBeVisible();
-
-
 // Submit the form.
 
 // Expected Result: The error message "Username is required is required." should be displayed.
@@ -89,6 +83,41 @@ await expect(errorMessage).toBeVisible();
 
 // Test Case 3: Verify Error Message for Invalid Email
 // Description: Ensure that an error message is displayed when an invalid email is entered in the email field.
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+    //empty password
+      await page.locator('input[name="password"]').fill('password');
+      await page.locator('input[name="firstName"]')
+      await page.locator('input[name="lastName"]').fill('Lastname');
+      await page.locator('input[name="email"]').fill('something@a.a');
+      await page.locator('input[name="phone"]').fill('1234567891');
+      await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Username is required is required."
+const errorMessage = await page.locator('text=First Name is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
 
 // Steps:
 // Navigate to the customer update page.
@@ -99,9 +128,43 @@ await expect(errorMessage).toBeVisible();
 // Check for the error message indicating that the email is invalid.
 // Expected Result: The error message indicating that the email is invalid should be displayed.
 
-// Test Case 4: Verify Successful Customer Update
+// Test Case 4: missing last name
 // Description: Ensure that the customer details are successfully updated when valid data is entered.
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
 
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+    //empty password
+      await page.locator('input[name="password"]').fill('password');
+      await page.locator('input[name="firstName"]').fill('Name');
+      await page.locator('input[name="lastName"]')
+      await page.locator('input[name="email"]').fill('something@a.a');
+      await page.locator('input[name="phone"]').fill('1234567891');
+      await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Last Name is required is required."
+const errorMessage = await page.locator('text=Last Name is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
 // Steps:
 // Navigate to the customer update page.
 // Fill in all required fields with valid data.
@@ -109,8 +172,43 @@ await expect(errorMessage).toBeVisible();
 // Check for a success message or redirection to the customer details page.
 // Expected Result: The customer details should be successfully updated, and a success message should be displayed or the user should be redirected to the customer details page.
 
-// Test Case 5: Verify Error Message for Empty Required Fields
+// Test Case 5: mail required
 // Description: Ensure that error messages are displayed when required fields are left empty and the form is submitted.
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]')
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Email is required is required."
+const errorMessage = await page.locator('text=Email is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
 
 // Steps:
 // Navigate to the customer update page.
@@ -118,3 +216,272 @@ await expect(errorMessage).toBeVisible();
 // Submit the form.
 // Check for error messages indicating that the required fields are empty.
 // Expected Result: Error messages indicating that the required fields are empty should be displayed.
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Email is required is required."
+const errorMessage = await page.locator('text=Email is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+
+// Test Case 6: phone required
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]')
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Phone Number is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Phone Number is required."
+const errorMessage = await page.locator('text=Phone Number is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+// Test Case 7: phone required
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]')
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Date of Birth is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Date of Birth is required."
+const errorMessage = await page.locator('text=Date of Birth is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+
+//Test Case 9 - Successfull login
+
+
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]')
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Email is required is required."
+const errorMessage = await page.locator('text=Email is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+// Steps:
+// Navigate to the customer update page.
+// Leave one or more required fields empty.
+// Submit the form.
+// Check for error messages indicating that the required fields are empty.
+// Expected Result: Error messages indicating that the required fields are empty should be displayed.
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Username is required is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Email is required is required."
+const errorMessage = await page.locator('text=Email is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+
+// Test Case 6: phone required
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]')
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Phone Number is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+// Check for the error message "Phone Number is required."
+const errorMessage = await page.locator('text=Phone Number is required.');
+await expect(errorMessage).toBeVisible();
+});
+} );
+
+// Test Case 7: phone required
+test.describe('Missing data1', () => {
+  test('login', async ({ page }) => {
+    // Navigate to the login page.
+    await page.goto('http://localhost:4200/login') 
+    // Fill in the username field with a valid username.
+    // Fill in the password field with a valid password.
+    const usernameField = await page.locator('input[name="name"]').fill('tester');
+    const passwordField = await page.locator('input[name="password"]').fill('tester@123');
+    // Submit the form.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('Login Successful');
+      await dialog.dismiss();
+    });
+
+   //empty password
+   await page.locator('input[name="password"]').fill('password');
+   await page.locator('input[name="firstName"]').fill('Name');
+   await page.locator('input[name="lastName"]').fill('Lastname');
+   await page.locator('input[name="email"]').fill('something@a.a');
+   await page.locator('input[name="phone"]').fill('1234567891');
+   await page.locator('input[name="dateofBirth"]').fill('1980-02-12');
+
+
+
+// Submit the form.
+
+// Expected Result: The error message "Date of Birth is required." should be displayed.
+    await page.locator('button[type=submit]').click();
+
+    page.on('dialog', async dialog => {
+      expect(dialog.message()).toContain('In future we will update the user data');
+     
+    });
+  });
+});
